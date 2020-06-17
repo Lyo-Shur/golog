@@ -77,6 +77,14 @@ func (logger *Logger) Log(level golog.Level, log string, param ...golog.KV) {
 		Level:        logger.Level,
 		CustomParams: param,
 	}
+	// 判断过滤
+	b, err := logger.doFilter(level, log, params)
+	if err != nil && logger.ErrorCallBack != nil {
+		logger.ErrorCallBack(err)
+	}
+	if !b {
+		return
+	}
 	for i := range logger.Handlers {
 		item := logger.Handlers[i]
 		err := item.Log(level, log, params)

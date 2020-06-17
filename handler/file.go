@@ -2,6 +2,7 @@ package handler
 
 import (
 	"os"
+	"sync"
 	"time"
 )
 
@@ -30,8 +31,12 @@ func getDataTime(layout string) string {
 	return time.Now().Format(layout)
 }
 
+// 锁 避免多线程打印 重复打开文件或重复分割
+var lock = sync.Mutex{}
+
 // 写文件
 func FileWrite(handler Handler, dir string, log string) error {
+	lock.Lock()
 	// 创建或打开文件
 	if _, ok := handler.Params["osFile"]; !ok {
 		b := checkFileIsExist(dir)
@@ -75,6 +80,7 @@ func FileWrite(handler Handler, dir string, log string) error {
 		}
 		handler.Params["osFile"] = osFile
 	}
+	lock.Unlock()
 	// 记录日志
 	osFile = handler.Params["osFile"].(*os.File)
 	_, err = osFile.WriteString(log + "\n")
