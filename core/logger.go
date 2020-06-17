@@ -1,15 +1,16 @@
 package core
 
 import (
-	"golog/filter"
-	"golog/handler"
-	golog "golog/log"
+	"github.com/Lyo-Shur/golog"
+	"github.com/Lyo-Shur/golog/filter"
+	"github.com/Lyo-Shur/golog/handler"
+	"github.com/Lyo-Shur/golog/log"
 )
 
 // 日志主体
 type Logger struct {
 	// 级别
-	Level golog.Level
+	Level log.Level
 	// 异常回调
 	ErrorCallBack func(err error)
 	// 过滤器
@@ -48,9 +49,9 @@ func (logger *Logger) SetErrorCallBack(function func(err error)) *Logger {
 }
 
 // 记录日志前置处理
-func (logger *Logger) doFilter(level golog.Level, log string, param golog.Param) (bool, error) {
+func (logger *Logger) doFilter(level golog.Level, message string, param golog.Param) (bool, error) {
 	levelFilter := filter.LevelFilter{}
-	b, err := levelFilter.Verification(level, log, param)
+	b, err := levelFilter.Verification(level, message, param)
 	if err != nil {
 		return false, err
 	}
@@ -59,7 +60,7 @@ func (logger *Logger) doFilter(level golog.Level, log string, param golog.Param)
 	}
 	for i := range logger.Filters {
 		item := logger.Filters[i]
-		b, err = item.Verification(level, log, param)
+		b, err = item.Verification(level, message, param)
 		if err != nil {
 			return false, err
 		}
@@ -71,14 +72,14 @@ func (logger *Logger) doFilter(level golog.Level, log string, param golog.Param)
 }
 
 // 记录日志
-func (logger *Logger) Log(level golog.Level, log string, param ...golog.KV) {
+func (logger *Logger) Log(level golog.Level, message string, param ...golog.KV) {
 	// 组装参数
 	params := golog.Param{
 		Level:        logger.Level,
 		CustomParams: param,
 	}
 	// 判断过滤
-	b, err := logger.doFilter(level, log, params)
+	b, err := logger.doFilter(level, message, params)
 	if err != nil && logger.ErrorCallBack != nil {
 		logger.ErrorCallBack(err)
 	}
@@ -87,7 +88,7 @@ func (logger *Logger) Log(level golog.Level, log string, param ...golog.KV) {
 	}
 	for i := range logger.Handlers {
 		item := logger.Handlers[i]
-		err := item.Log(level, log, params)
+		err := item.Log(level, message, params)
 		if err != nil && logger.ErrorCallBack != nil {
 			logger.ErrorCallBack(err)
 		}

@@ -1,7 +1,7 @@
 package formatter
 
 import (
-	"golog/log"
+	"github.com/Lyo-Shur/golog/log"
 	"strconv"
 	"time"
 )

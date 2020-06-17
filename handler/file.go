@@ -35,7 +35,7 @@ func getDataTime(layout string) string {
 var lock = sync.Mutex{}
 
 // 写文件
-func FileWrite(handler Handler, dir string, log string) error {
+func FileWrite(handler Handler, dir string, message string) error {
 	lock.Lock()
 	// 创建或打开文件
 	if _, ok := handler.Params["osFile"]; !ok {
@@ -83,7 +83,7 @@ func FileWrite(handler Handler, dir string, log string) error {
 	lock.Unlock()
 	// 记录日志
 	osFile = handler.Params["osFile"].(*os.File)
-	_, err = osFile.WriteString(log + "\n")
+	_, err = osFile.WriteString(message + "\n")
 	if err != nil {
 		return err
 	}

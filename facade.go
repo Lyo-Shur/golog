@@ -2,11 +2,11 @@ package golog
 
 import (
 	"fmt"
-	"golog/core"
-	"golog/filter"
-	"golog/formatter"
-	"golog/handler"
-	"golog/log"
+	"github.com/Lyo-Shur/golog/core"
+	"github.com/Lyo-Shur/golog/filter"
+	"github.com/Lyo-Shur/golog/formatter"
+	"github.com/Lyo-Shur/golog/handler"
+	"github.com/Lyo-Shur/golog/log"
 )
 
 // 日志
