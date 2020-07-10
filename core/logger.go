@@ -1,7 +1,6 @@
 package core
 
 import (
-	"github.com/Lyo-Shur/golog"
 	"github.com/Lyo-Shur/golog/filter"
 	"github.com/Lyo-Shur/golog/handler"
 	"github.com/Lyo-Shur/golog/log"
@@ -20,12 +19,12 @@ type Logger struct {
 }
 
 // 获取日志级别
-func (logger *Logger) GetLevel() golog.Level {
+func (logger *Logger) GetLevel() log.Level {
 	return logger.Level
 }
 
 // 设置日志级别
-func (logger *Logger) SetLevel(level golog.Level) *Logger {
+func (logger *Logger) SetLevel(level log.Level) *Logger {
 	logger.Level = level
 	return logger
 }
@@ -49,7 +48,7 @@ func (logger *Logger) SetErrorCallBack(function func(err error)) *Logger {
 }
 
 // 记录日志前置处理
-func (logger *Logger) doFilter(level golog.Level, message string, param golog.Param) (bool, error) {
+func (logger *Logger) doFilter(level log.Level, message string, param log.Param) (bool, error) {
 	levelFilter := filter.LevelFilter{}
 	b, err := levelFilter.Verification(level, message, param)
 	if err != nil {
@@ -72,9 +71,9 @@ func (logger *Logger) doFilter(level golog.Level, message string, param golog.Pa
 }
 
 // 记录日志
-func (logger *Logger) Log(level golog.Level, message string, param ...golog.KV) {
+func (logger *Logger) Log(level log.Level, message string, param ...log.KV) {
 	// 组装参数
-	params := golog.Param{
+	params := log.Param{
 		Level:        logger.Level,
 		CustomParams: param,
 	}
@@ -96,18 +95,18 @@ func (logger *Logger) Log(level golog.Level, message string, param ...golog.KV) 
 }
 
 // 记录日志
-func (logger *Logger) Debug(log string, param ...golog.KV) {
-	logger.Log(golog.Debug, log, param...)
+func (logger *Logger) Debug(message string, param ...log.KV) {
+	logger.Log(log.Debug, message, param...)
 }
-func (logger *Logger) Info(log string, param ...golog.KV) {
-	logger.Log(golog.Info, log, param...)
+func (logger *Logger) Info(message string, param ...log.KV) {
+	logger.Log(log.Info, message, param...)
 }
-func (logger *Logger) Warning(log string, param ...golog.KV) {
-	logger.Log(golog.Warning, log, param...)
+func (logger *Logger) Warning(message string, param ...log.KV) {
+	logger.Log(log.Warning, message, param...)
 }
-func (logger *Logger) Error(log string, param ...golog.KV) {
-	logger.Log(golog.Error, log, param...)
+func (logger *Logger) Error(message string, param ...log.KV) {
+	logger.Log(log.Error, message, param...)
 }
-func (logger *Logger) Critical(log string, param ...golog.KV) {
-	logger.Log(golog.Critical, log, param...)
+func (logger *Logger) Critical(message string, param ...log.KV) {
+	logger.Log(log.Critical, message, param...)
 }

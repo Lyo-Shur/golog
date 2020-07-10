@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"github.com/Lyo-Shur/golog"
 	"github.com/Lyo-Shur/golog/filter"
 	"github.com/Lyo-Shur/golog/formatter"
 	"github.com/Lyo-Shur/golog/log"
@@ -22,12 +21,12 @@ type Handler struct {
 }
 
 // 获取日志级别
-func (handler *Handler) GetLevel() golog.Level {
+func (handler *Handler) GetLevel() log.Level {
 	return handler.Level
 }
 
 // 设置日志级别
-func (handler *Handler) SetLevel(level golog.Level) *Handler {
+func (handler *Handler) SetLevel(level log.Level) *Handler {
 	handler.Level = level
 	return handler
 }
@@ -45,7 +44,7 @@ func (handler *Handler) AddFilters(filter filter.Filter) *Handler {
 }
 
 // 记录日志前置处理
-func (handler *Handler) doFilter(level golog.Level, message string, param golog.Param) (bool, error) {
+func (handler *Handler) doFilter(level log.Level, message string, param log.Param) (bool, error) {
 	levelFilter := filter.LevelFilter{}
 	b, err := levelFilter.Verification(level, message, param)
 	if err != nil {
@@ -68,7 +67,7 @@ func (handler *Handler) doFilter(level golog.Level, message string, param golog.
 }
 
 // 对外Log接口
-func (handler *Handler) Log(level golog.Level, message string, param golog.Param) error {
+func (handler *Handler) Log(level log.Level, message string, param log.Param) error {
 	// 执行过滤
 	b, err := handler.doFilter(level, message, param)
 	if err != nil {
