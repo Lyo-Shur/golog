@@ -11,6 +11,11 @@ const (
 	Critical
 )
 
+// 获取级别名
+func GetLevelName(level Level) string {
+	return [6]string{"Invalid", "Debug", "Info", "Warning", "Error", "Critical"}[level]
+}
+
 // 键值对
 type KV struct {
 	Key   string
