@@ -1,6 +1,6 @@
 package filter
 
-import "github.com/Lyo-Shur/golog/log"
+import "github.com/lyoshur/golog/log"
 
 // 过滤器
 type Filter interface {

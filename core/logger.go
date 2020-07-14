@@ -1,9 +1,9 @@
 package core
 
 import (
-	"github.com/Lyo-Shur/golog/filter"
-	"github.com/Lyo-Shur/golog/handler"
-	"github.com/Lyo-Shur/golog/log"
+	"github.com/lyoshur/golog/filter"
+	"github.com/lyoshur/golog/handler"
+	"github.com/lyoshur/golog/log"
 )
 
 // 日志主体

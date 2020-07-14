@@ -1,7 +1,7 @@
 package formatter
 
 import (
-	"github.com/Lyo-Shur/golog/log"
+	"github.com/lyoshur/golog/log"
 	"time"
 )
 
